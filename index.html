@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Relasi dalam Matematika Diskret</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .kartu + .kartu { margin-top: 1rem; }
+    .tips { background: var(--kertas); border: 1.5px dashed var(--aksen); border-radius: 6px; padding: .6rem .9rem; margin: .8rem 0; }
+    .tips::before { content: "Mudahnya: "; font-weight: 700; color: var(--aksen); }
+    .daftar-isi { display: flex; flex-wrap: wrap; gap: .4rem; margin: 0 0 1rem; padding: 0; list-style: none; }
+    .daftar-isi a { font-size: .85rem; padding: .15rem .6rem; border: 1px solid var(--garis); border-radius: 999px; color: var(--aksen); text-decoration: none; }
+    .matriks.kecil { margin: .5rem 0; }
+  </style>
+</head>
+<body>
+
+  <!-- Menu atas -->
+  <div class="bar">
+    <div class="wadah">
+      <a data-ke="beranda">Beranda</a>
+      <a data-ke="pengertian">Pengertian</a>
+      <a data-ke="contoh">Contoh</a>
+      <a data-ke="sifat">Sifat</a>
+      <a data-ke="kalkulator">Kalkulator</a>
+    </div>
+  </div>
+
+  <div class="wadah">
+
+    <!-- Halaman 1: Beranda -->
+    <div class="halaman" id="beranda" style="text-align:center">
+      <h1>Relasi</h1>
+      <p>Kajian matematika diskret tentang hubungan antara anggota dua himpunan. Klik salah satu judul untuk membuka halamannya.</p>
+      <ul class="menu">
+        <li><a data-ke="pengertian">Pengertian relasi<small>Dari dasar sampai invers, komposisi, dan closure</small></a></li>
+        <li><a data-ke="contoh">Contoh relasi<small>Dua belas contoh lengkap dengan langkah pengerjaan</small></a></li>
+        <li><a data-ke="sifat">Sifat relasi<small>Refleksif, simetris, transitif, dan lainnya</small></a></li>
+        <li><a data-ke="kalkulator">Kalkulator relasi<small>Hitung domain, matriks, invers, dan sifat</small></a></li>
+      </ul>
+    </div>
+
+    <!-- Halaman 2: Pengertian -->
+    <div class="halaman" id="pengertian">
+      <a class="kembali" data-ke="beranda">← Kembali ke beranda</a>
+
+      <div class="kartu">
+        <h2>1. Apa itu relasi?</h2>
+        <p>Dalam kehidupan sehari-hari, <b>relasi</b> berarti hubungan. Contohnya: siswa dengan mata pelajaran yang ia ambil, kota dengan negaranya, atau bilangan dengan bilangan lain yang habis dibaginya.</p>
+        <p>Dalam matematika diskret, hubungan itu ditulis dengan cara yang tepat: sebagai <b>kumpulan pasangan</b>. Kalau Ani mengambil Fisika, kita tulis pasangan (Ani, Fisika). Seluruh pasangan yang benar-benar berhubungan dikumpulkan dalam satu himpunan, dan himpunan itulah yang disebut relasi.</p>
+        <p class="tips">relasi = daftar pasangan yang "berhubungan". Pasangan yang tidak ada di daftar berarti tidak berhubungan.</p>
+      </div>
+
+      <div class="kartu">
+        <h2>2. Pasangan terurut dan hasil kali kartesius</h2>
+        <p><b>Pasangan terurut</b> (a, b) memperhatikan urutan. Jadi (1, 2) tidak sama dengan (2, 1). Beda dengan himpunan {1, 2} yang sama saja dengan {2, 1}.</p>
+        <p><b>Hasil kali kartesius</b> A × B adalah himpunan semua pasangan terurut yang mungkin, dengan elemen pertama dari A dan elemen kedua dari B.</p>
+        <p class="rumus">A × B = {(a, b) | a ∈ A dan b ∈ B}</p>
+        <p>Contoh: A = {1, 2} dan B = {x, y}, maka A × B = {(1,x), (1,y), (2,x), (2,y)}. Banyaknya pasangan = |A| × |B| = 2 × 2 = 4.</p>
+        <p class="tips">A × B itu seperti tabel semua kemungkinan pasangan. Relasi hanya mengambil sebagian (atau semuanya) dari tabel itu.</p>
+      </div>
+
+      <div class="kartu">
+        <h2>3. Definisi relasi</h2>
+        <p><b>Relasi</b> dari himpunan A ke himpunan B adalah himpunan bagian dari A × B. Anggotanya berupa pasangan terurut (a, b) dengan a ∈ A dan b ∈ B.</p>
+        <p class="rumus">R ⊆ A × B &nbsp;&nbsp; (a, b) ∈ R ⇔ a R b</p>
+        <ul>
+          <li>Dibaca: "(a, b) anggota R" sama artinya dengan "a berelasi dengan b".</li>
+          <li>Jika (a, b) ∉ R, ditulis a R̸ b, artinya a tidak berelasi dengan b.</li>
+          <li>Relasi boleh kosong (R = ∅) dan boleh berisi seluruh A × B.</li>
+          <li><b>Relasi pada himpunan A</b> berarti R ⊆ A × A, yaitu A dan B adalah himpunan yang sama.</li>
+          <li>Jika |A| = m dan |B| = n, ada 2<sup>m·n</sup> relasi yang mungkin dari A ke B, karena tiap pasangan di A × B bisa "dipakai" atau "tidak dipakai".</li>
+        </ul>
+      </div>
+
+      <div class="kartu">
+        <h2>4. Domain, kodomain, dan daerah hasil</h2>
+        <ul>
+          <li><b>Domain</b> (daerah asal): semua anggota A yang muncul sebagai elemen pertama pasangan di R.</li>
+          <li><b>Kodomain</b> (daerah kawan): seluruh himpunan B.</li>
+          <li><b>Daerah hasil</b> (range): anggota B yang muncul sebagai elemen kedua pasangan di R.</li>
+        </ul>
+        <p class="rumus">Domain(R) ⊆ A &nbsp;&nbsp; Daerah hasil(R) ⊆ B</p>
+        <p class="tips">domain = "siapa saja yang punya pasangan", daerah hasil = "siapa saja yang dipilih sebagai pasangan". Kodomain itu semua yang tersedia, termasuk yang tidak dipilih.</p>
+      </div>
+
+      <div class="kartu">
+        <h2>5. Cara menyajikan relasi</h2>
+        <p>Satu relasi yang sama bisa ditulis dengan beberapa cara. Untuk A = {1, 2, 3}, B = {x, y}, R = {(1,x), (2,y), (3,x), (3,y)}:</p>
+        <ul>
+          <li><b>Himpunan pasangan</b>: ditulis langsung seperti di atas.</li>
+          <li><b>Tabel</b>: dua kolom, kolom kiri elemen A dan kolom kanan pasangannya di B.</li>
+          <li><b>Diagram panah</b>: gambar dua himpunan, lalu tarik panah dari a ke b untuk tiap (a, b) ∈ R. Panah dari 1 ke x, 2 ke y, 3 ke x, dan 3 ke y.</li>
+          <li><b>Matriks relasi</b>: baris untuk A, kolom untuk B. Isi 1 jika (a, b) ∈ R, dan 0 jika tidak. Hasilnya matriks 3 × 2 berisi baris 1 0, 0 1, 1 1.</li>
+          <li><b>Graf berarah</b> (untuk relasi pada satu himpunan): tiap anggota A menjadi titik, tiap (a, b) menjadi panah dari a ke b. Pasangan (a, a) menjadi panah melingkar pada titik a (disebut <i>loop</i>).</li>
+        </ul>
+      </div>
+
+      <div class="kartu">
+        <h2>6. Invers relasi</h2>
+        <p><b>Invers</b> dari R adalah relasi yang semua pasangannya dibalik urutannya.</p>
+        <p class="rumus">R⁻¹ = {(b, a) | (a, b) ∈ R}</p>
+        <p>R⁻¹ adalah relasi dari B ke A. Domain R⁻¹ sama dengan daerah hasil R, dan sebaliknya. Pada matriks, invers sama dengan <b>transpos</b> (baris dan kolom ditukar).</p>
+      </div>
+
+      <div class="kartu">
+        <h2>7. Komposisi relasi</h2>
+        <p>Misal R relasi dari A ke B dan S relasi dari B ke C. <b>Komposisi</b> S ∘ R adalah relasi dari A ke C.</p>
+        <p class="rumus">S ∘ R = {(a, c) | ada b ∈ B sehingga (a, b) ∈ R dan (b, c) ∈ S}</p>
+        <p class="tips">komposisi itu "lewat perantara". Jika a terhubung ke b, dan b terhubung ke c, maka a terhubung ke c lewat b. Perhatikan urutan penulisan: S ∘ R artinya R dikerjakan dulu, baru S.</p>
+        <p>Pada matriks, komposisi dihitung dengan perkalian matriks Boolean (kali = AND, jumlah = OR).</p>
+      </div>
+
+      <div class="kartu">
+        <h2>8. Operasi himpunan pada relasi</h2>
+        <p>Karena relasi adalah himpunan, semua operasi himpunan berlaku untuk relasi yang sama-sama dari A ke B.</p>
+        <ul>
+          <li><b>Gabungan</b> R₁ ∪ R₂: pasangan yang ada di R₁ atau R₂.</li>
+          <li><b>Irisan</b> R₁ ∩ R₂: pasangan yang ada di keduanya.</li>
+          <li><b>Selisih</b> R₁ − R₂: pasangan di R₁ yang tidak ada di R₂.</li>
+          <li><b>Komplemen</b> R̄: semua pasangan di A × B yang tidak ada di R.</li>
+        </ul>
+      </div>
+
+      <div class="kartu">
+        <h2>9. Relasi dan fungsi</h2>
+        <p><b>Fungsi</b> dari A ke B adalah relasi khusus: setiap anggota A punya <b>tepat satu</b> pasangan di B. Jadi semua fungsi adalah relasi, tetapi tidak semua relasi adalah fungsi.</p>
+        <p class="tips">relasi bukan fungsi jika ada anggota A yang tidak punya pasangan, atau punya pasangan lebih dari satu.</p>
+      </div>
+
+      <div class="kartu">
+        <h2>10. Closure (penutup) relasi</h2>
+        <p><b>Closure</b> sebuah sifat adalah relasi terkecil yang memuat R dan memiliki sifat tersebut. Caranya: tambahkan pasangan yang kurang, dan hanya yang diperlukan.</p>
+        <ul>
+          <li><b>Closure refleksif</b>: tambahkan (a, a) untuk semua a ∈ A.</li>
+          <li><b>Closure simetris</b>: tambahkan (b, a) untuk setiap (a, b) ∈ R. Hasilnya R ∪ R⁻¹.</li>
+          <li><b>Closure transitif</b>: tambahkan (a, c) setiap ada (a, b) dan (b, c). Ulangi sampai tidak ada yang kurang lagi.</li>
+        </ul>
+      </div>
+
+      <div class="kartu">
+        <h2>11. Relasi ekuivalen dan relasi urutan parsial</h2>
+        <p><b>Relasi ekuivalen</b> adalah relasi yang refleksif, simetris, dan transitif. Artinya "sama dalam suatu hal", misalnya sama tinggi atau sama sisa bagi. Relasi ekuivalen membagi A menjadi kelompok-kelompok yang tidak saling tumpang tindih, disebut <b>kelas ekuivalen</b>.</p>
+        <p><b>Relasi urutan parsial</b> adalah relasi yang refleksif, anti-simetris, dan transitif. Artinya ada "urutan", tetapi tidak semua pasangan harus bisa dibandingkan. Himpunan beserta urutan parsialnya disebut <i>poset</i>.</p>
+      </div>
+    </div>
+
+    <!-- Halaman 3: Contoh -->
+    <div class="halaman" id="contoh">
+      <a class="kembali" data-ke="beranda">← Kembali ke beranda</a>
+      <div class="kartu">
+        <h2>Contoh relasi</h2>
+        <p>Ada dua belas contoh. Kamu bisa menyalin relasinya ke halaman Kalkulator untuk mengecek hasilnya.</p>
+
+        <div class="contoh">
+          <h3>Contoh 1: hasil kali kartesius dan banyak relasi</h3>
+          <p>Misal A = {a, b} dan B = {1, 2, 3}.</p>
+          <p class="rumus">A × B = {(a,1), (a,2), (a,3), (b,1), (b,2), (b,3)}</p>
+          <p>|A × B| = 2 × 3 = 6. Karena tiap pasangan boleh dipilih atau tidak, banyak relasi dari A ke B adalah 2<sup>6</sup> = 64. Dua di antaranya adalah R = ∅ (tidak ada pasangan) dan R = A × B (semua pasangan).</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 2: siswa dan mata pelajaran</h3>
+          <p>A = {Ani, Budi}, B = {Fisika, Kimia, Biologi}. Relasi "mengambil" misalnya:</p>
+          <p class="rumus">R = {(Ani, Fisika), (Ani, Kimia), (Budi, Biologi)}</p>
+          <p>Domain = {Ani, Budi}. Kodomain = {Fisika, Kimia, Biologi}. Daerah hasil = {Fisika, Kimia, Biologi}.</p>
+          <p>Invers: R⁻¹ = {(Fisika, Ani), (Kimia, Ani), (Biologi, Budi)}, dibaca "mata pelajaran diambil oleh siapa".</p>
+          <p>Ini bukan fungsi, karena Ani punya dua pasangan.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 3: representasi matriks</h3>
+          <p>Untuk A = {1, 2, 3}, B = {x, y} dan R = {(1,x), (2,y), (3,x), (3,y)}:</p>
+          <table class="matriks">
+            <tr><th></th><th>x</th><th>y</th></tr>
+            <tr><th>1</th><td>1</td><td>0</td></tr>
+            <tr><th>2</th><td>0</td><td>1</td></tr>
+            <tr><th>3</th><td>1</td><td>1</td></tr>
+          </table>
+          <p>Cara membaca: baris 3, kolom x bernilai 1 karena (3, x) ∈ R. Baris 1, kolom y bernilai 0 karena (1, y) ∉ R. Jumlah angka 1 pada matriks sama dengan |R| = 4.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 4: "habis membagi"</h3>
+          <p>Misal A = {1, 2, 3, 4} dan R = {(a, b) | a habis membagi b}.</p>
+          <p class="rumus">R = {(1,1), (1,2), (1,3), (1,4), (2,2), (2,4), (3,3), (4,4)}</p>
+          <ul>
+            <li>Refleksif: setiap bilangan habis membagi dirinya, jadi (1,1), (2,2), (3,3), (4,4) ada.</li>
+            <li>Tidak simetris: (1,2) ada, tetapi (2,1) tidak ada.</li>
+            <li>Anti-simetris: tidak ada dua bilangan berbeda yang saling habis membagi.</li>
+            <li>Transitif: contoh (1,2) dan (2,4) ada, dan (1,4) juga ada.</li>
+          </ul>
+          <p>Karena refleksif, anti-simetris, dan transitif, relasi ini adalah relasi urutan parsial. Ini bukan urutan total, sebab 2 dan 3 tidak bisa dibandingkan (2 tidak membagi 3, 3 tidak membagi 2).</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 5: "lebih kecil dari"</h3>
+          <p>A = {1, 2, 3} dan R = {(a, b) | a &lt; b}.</p>
+          <p class="rumus">R = {(1,2), (1,3), (2,3)}</p>
+          <ul>
+            <li>Irefleksif: tidak ada bilangan yang lebih kecil dari dirinya, jadi tidak ada (a, a).</li>
+            <li>Tidak refleksif, tidak simetris.</li>
+            <li>Asimetris: (1,2) ada dan (2,1) tidak ada, begitu juga pasangan lain.</li>
+            <li>Anti-simetris: syaratnya terpenuhi secara hampa (vacuous), sebab tidak ada pasangan (a, b) dan (b, a) yang sama-sama ada.</li>
+            <li>Transitif: (1,2) dan (2,3) ada, dan (1,3) ada.</li>
+          </ul>
+          <p>Catatan: relasi asimetris pasti irefleksif dan anti-simetris.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 6: relasi ekuivalen (kongruen modulo 3)</h3>
+          <p>A = {1, 2, 3, 4, 5, 6}. a berelasi dengan b jika a dan b punya sisa bagi 3 yang sama.</p>
+          <p class="rumus">R = {(1,1), (1,4), (4,1), (4,4), (2,2), (2,5), (5,2), (5,5), (3,3), (3,6), (6,3), (6,6)}</p>
+          <ul>
+            <li>Refleksif: setiap bilangan sama sisa baginya dengan dirinya.</li>
+            <li>Simetris: jika 1 R 4 maka 4 R 1.</li>
+            <li>Transitif: jika a dan b sama sisa, dan b dan c sama sisa, maka a dan c sama sisa.</li>
+          </ul>
+          <p>Jadi R relasi ekuivalen. Kelas ekuivalennya: sisa 1 → {1, 4}, sisa 2 → {2, 5}, sisa 0 → {3, 6}. Ketiga kelas ini membagi A tanpa tumpang tindih.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 7: relasi simetris yang tidak transitif</h3>
+          <p>A = {Ani, Budi, Cici}, relasi "berteman":</p>
+          <p class="rumus">R = {(Ani,Budi), (Budi,Ani), (Budi,Cici), (Cici,Budi)}</p>
+          <ul>
+            <li>Simetris: setiap pasangan punya kebalikannya.</li>
+            <li>Irefleksif: tidak ada yang berteman dengan dirinya sendiri.</li>
+            <li>Tidak transitif: (Ani,Budi) dan (Budi,Cici) ada, tetapi (Ani,Cici) tidak ada. Satu contoh penyangkal sudah cukup untuk menyatakan tidak transitif.</li>
+          </ul>
+          <p>Jadi bukan relasi ekuivalen. Pelajaran pentingnya: "teman dari teman" belum tentu teman.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 8: memeriksa sifat lewat matriks</h3>
+          <p>A = {1, 2, 3} dan R = {(1,1), (2,2), (3,3), (1,2), (2,1)}.</p>
+          <table class="matriks kecil">
+            <tr><th></th><th>1</th><th>2</th><th>3</th></tr>
+            <tr><th>1</th><td>1</td><td>1</td><td>0</td></tr>
+            <tr><th>2</th><td>1</td><td>1</td><td>0</td></tr>
+            <tr><th>3</th><td>0</td><td>0</td><td>1</td></tr>
+          </table>
+          <ul>
+            <li>Refleksif jika diagonal utama semuanya 1. Di sini terpenuhi.</li>
+            <li>Simetris jika matriks sama dengan transposnya (cermin terhadap diagonal). Di sini terpenuhi.</li>
+            <li>Transitif: dicek per pasangan, dan semuanya terpenuhi.</li>
+          </ul>
+          <p>Jadi R relasi ekuivalen dengan kelas {1, 2} dan {3}. Contoh ini sama dengan tombol "Isi contoh ekuivalen" di kalkulator.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 9: invers relasi</h3>
+          <p>A = {1, 2, 3}, B = {a, b} dan R = {(1,a), (2,b), (3,a)}.</p>
+          <p class="rumus">R⁻¹ = {(a,1), (b,2), (a,3)}</p>
+          <p>Domain R = {1, 2, 3} dan daerah hasil R = {a, b}. Pada R⁻¹ keduanya tertukar: domain R⁻¹ = {a, b} dan daerah hasil R⁻¹ = {1, 2, 3}. Matriks R⁻¹ adalah transpos matriks R.</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 10: komposisi relasi</h3>
+          <p>A = {1, 2, 3}, B = {a, b}, C = {x, y}. R dari A ke B dan S dari B ke C:</p>
+          <p class="rumus">R = {(1,a), (2,b), (3,a)} &nbsp; S = {(a,x), (b,y), (b,x)}</p>
+          <p>Cari pasangan lewat perantara:</p>
+          <ul>
+            <li>(1,a) dari R dan (a,x) dari S, maka (1,x).</li>
+            <li>(2,b) dari R dan (b,y), (b,x) dari S, maka (2,y) dan (2,x).</li>
+            <li>(3,a) dari R dan (a,x) dari S, maka (3,x).</li>
+          </ul>
+          <p class="rumus">S ∘ R = {(1,x), (2,x), (2,y), (3,x)}</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 11: operasi dan closure</h3>
+          <p>Operasi: A = {1, 2}, R₁ = {(1,1), (1,2), (2,2)} dan R₂ = {(1,2), (2,1)}.</p>
+          <ul>
+            <li>R₁ ∪ R₂ = {(1,1), (1,2), (2,1), (2,2)}</li>
+            <li>R₁ ∩ R₂ = {(1,2)}</li>
+            <li>R₁ − R₂ = {(1,1), (2,2)}</li>
+            <li>Komplemen R₁ = A × A − R₁ = {(2,1)}</li>
+          </ul>
+          <p>Closure: A = {1, 2, 3} dan R = {(1,2), (2,3)}.</p>
+          <ul>
+            <li>Closure refleksif: tambah (1,1), (2,2), (3,3).</li>
+            <li>Closure simetris: tambah (2,1), (3,2).</li>
+            <li>Closure transitif: (1,2) dan (2,3) ada, maka tambah (1,3). Setelah itu tidak ada yang kurang lagi.</li>
+          </ul>
+          <p class="rumus">Closure transitif = {(1,2), (2,3), (1,3)}</p>
+        </div>
+
+        <div class="contoh">
+          <h3>Contoh 12: relasi yang fungsi dan yang bukan</h3>
+          <p>A = {1, 2, 3} dan B = {a, b}.</p>
+          <ul>
+            <li>R₁ = {(1,a), (2,b), (3,b)} adalah fungsi: tiap anggota A punya tepat satu pasangan.</li>
+            <li>R₂ = {(1,a), (1,b), (2,a)} bukan fungsi: 1 punya dua pasangan, dan 3 tidak punya pasangan.</li>
+          </ul>
+          <p>Banyak fungsi dari A ke B adalah |B|<sup>|A|</sup> = 2<sup>3</sup> = 8, jauh lebih sedikit dibanding banyak relasi 2<sup>6</sup> = 64.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Halaman 4: Sifat -->
+    <div class="halaman" id="sifat">
+      <a class="kembali" data-ke="beranda">← Kembali ke beranda</a>
+      <div class="kartu">
+        <h2>Sifat relasi pada satu himpunan</h2>
+        <dl>
+          <dt>Refleksif</dt><dd>(a, a) ∈ R untuk setiap a ∈ A.</dd>
+          <dt>Irefleksif</dt><dd>(a, a) ∉ R untuk setiap a ∈ A.</dd>
+          <dt>Simetris</dt><dd>Jika (a, b) ∈ R maka (b, a) ∈ R.</dd>
+          <dt>Anti-simetris</dt><dd>Jika (a, b) ∈ R dan (b, a) ∈ R maka a = b.</dd>
+          <dt>Asimetris</dt><dd>Jika (a, b) ∈ R maka (b, a) ∉ R.</dd>
+          <dt>Transitif</dt><dd>Jika (a, b) ∈ R dan (b, c) ∈ R maka (a, c) ∈ R.</dd>
+          <dt>Relasi ekuivalen</dt><dd>Refleksif, simetris, dan transitif.</dd>
+          <dt>Urutan parsial</dt><dd>Refleksif, anti-simetris, dan transitif.</dd>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Halaman 5: Kalkulator -->
+    <div class="halaman" id="kalkulator">
+      <a class="kembali" data-ke="beranda">← Kembali ke beranda</a>
+      <div class="kartu">
+        <h2>Kalkulator relasi</h2>
+        <p>Pisahkan anggota himpunan dengan koma. Tulis pasangan seperti (1,2), (2,3). Kosongkan B untuk relasi pada A.</p>
+
+        <div class="form">
+          <label>Himpunan A
+            <input id="a" value="1, 2, 3, 4" autocomplete="off">
+          </label>
+          <label>Himpunan B
+            <input id="b" placeholder="kosong = sama dengan A" autocomplete="off">
+          </label>
+          <label>Relasi R
+            <textarea id="r" rows="3">(1,1), (1,2), (1,3), (1,4), (2,2), (2,4), (3,3), (4,4)</textarea>
+          </label>
+          <div class="tombol">
+            <button id="hitung">Hitung relasi</button>
+            <button id="contoh1" class="sekunder" type="button">Isi contoh habis membagi</button>
+            <button id="contoh2" class="sekunder" type="button">Isi contoh ekuivalen</button>
+          </div>
+        </div>
+
+        <div id="galat" role="alert" hidden></div>
+        <div id="hasil" hidden></div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>Matematika Diskret: Relasi</footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+
+    // ---------- Pindah halaman ----------
+    function ke(id) {
+      if (!$(id)) id = "beranda";
+      document.querySelectorAll(".halaman").forEach(h => h.classList.toggle("aktif", h.id === id));
+      document.querySelectorAll(".bar a").forEach(a => a.classList.toggle("aktif", a.dataset.ke === id));
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll("[data-ke]").forEach(el => {
+      el.setAttribute("tabindex", "0");
+      el.setAttribute("role", "link");
+      el.addEventListener("click", () => { location.hash = el.dataset.ke; });
+      el.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") location.hash = el.dataset.ke;
+      });
+    });
+
+    window.addEventListener("hashchange", () => ke(location.hash.slice(1)));
+    ke(location.hash.slice(1) || "beranda");
+
+    // ---------- Format tampilan ----------
+    const set = (arr) => "{" + arr.join(", ") + "}";
+    const pairs = (arr) => "{" + arr.map(p => `(${p[0]}, ${p[1]})`).join(", ") + "}";
+    const bool = (v) => `<span class="${v ? 'ya' : 'tidak'}">${v ? 'Ya' : 'Tidak'}</span>`;
+
+    // ---------- Parsing ----------
+    function parseHimpunan(teks) {
+      const hasil = [];
+      teks.replace(/[{}]/g, "").split(",").forEach(x => {
+        x = x.trim();
+        if (x && !hasil.includes(x)) hasil.push(x);
+      });
+      return hasil;
+    }
+
+    function parseRelasi(teks) {
+      const hasil = [];
+      const re = /\(\s*([^,()]+?)\s*,\s*([^,()]+?)\s*\)/g;
+      let m;
+      while ((m = re.exec(teks)) !== null) {
+        if (!hasil.some(p => p[0] === m[1] && p[1] === m[2])) hasil.push([m[1], m[2]]);
+      }
+      return hasil;
+    }
+
+    // ---------- Perhitungan ----------
+    function sifatRelasi(A, R) {
+      const ada = (x, y) => R.some(p => p[0] === x && p[1] === y);
+      const refleksif = A.every(a => ada(a, a));
+      const irefleksif = A.every(a => !ada(a, a));
+      const simetris = R.every(([x, y]) => ada(y, x));
+      const antisimetris = R.every(([x, y]) => !(ada(y, x) && x !== y));
+      const asimetris = R.every(([x, y]) => !ada(y, x));
+      const transitif = R.every(([x, y]) => R.every(([z, w]) => y !== z || ada(x, w)));
+      return {
+        "Refleksif": refleksif,
+        "Irefleksif": irefleksif,
+        "Simetris": simetris,
+        "Anti-simetris": antisimetris,
+        "Asimetris": asimetris,
+        "Transitif": transitif,
+        "Relasi ekuivalen": refleksif && simetris && transitif,
+        "Relasi urutan parsial": refleksif && antisimetris && transitif
+      };
+    }
+
+    function analisis(A, B, R) {
+      const ada = (x, y) => R.some(p => p[0] === x && p[1] === y);
+      const total = A.length * B.length;
+      const sama = A.length === B.length && A.every(x => B.includes(x));
+      return {
+        A, B, R,
+        banyakPasangan: R.length,
+        total,
+        banyakRelasi: (BigInt(2) ** BigInt(total)).toString(),
+        domain: A.filter(x => R.some(p => p[0] === x)),
+        daerahHasil: B.filter(y => R.some(p => p[1] === y)),
+        matriks: A.map(x => B.map(y => ada(x, y) ? 1 : 0)),
+        invers: R.map(([x, y]) => [y, x]),
+        fungsi: A.every(x => R.filter(p => p[0] === x).length === 1),
+        sifat: sama ? sifatRelasi(A, R) : null
+      };
+    }
+
+    // ---------- Tampilan hasil ----------
+    function tampil(d) {
+      let html = `
+        <h3>Ringkasan</h3>
+        <table class="info">
+          <tr><th>A</th><td>${set(d.A)}</td></tr>
+          <tr><th>B</th><td>${set(d.B)}</td></tr>
+          <tr><th>R</th><td>${pairs(d.R)}</td></tr>
+          <tr><th>|R|</th><td>${d.banyakPasangan} dari ${d.total} pasangan di A × B</td></tr>
+          <tr><th>Domain</th><td>${set(d.domain)}</td></tr>
+          <tr><th>Kodomain</th><td>${set(d.B)}</td></tr>
+          <tr><th>Daerah hasil</th><td>${set(d.daerahHasil)}</td></tr>
+          <tr><th>Invers R⁻¹</th><td>${pairs(d.invers)}</td></tr>
+          <tr><th>Fungsi?</th><td>${bool(d.fungsi)}</td></tr>
+          <tr><th>Relasi yang mungkin</th><td>2<sup>${d.total}</sup> = ${d.banyakRelasi}</td></tr>
+        </table>
+        <h3>Matriks relasi</h3>
+        <div class="gulir"><table class="matriks"><tr><th></th>${d.B.map(y => `<th>${y}</th>`).join("")}</tr>
+        ${d.A.map((x, i) => `<tr><th>${x}</th>${d.matriks[i].map(v => `<td class="${v ? 'satu' : ''}">${v}</td>`).join("")}</tr>`).join("")}
+        </table></div>`;
+
+      if (d.sifat) {
+        html += `<h3>Sifat relasi</h3><table class="info">` +
+          Object.entries(d.sifat).map(([k, v]) => `<tr><th>${k}</th><td>${bool(v)}</td></tr>`).join("") +
+          `</table>`;
+      } else {
+        html += `<p class="catatan">Sifat relasi hanya diperiksa untuk relasi pada satu himpunan (A = B).</p>`;
+      }
+      $("hasil").innerHTML = html;
+      $("hasil").hidden = false;
+    }
+
+    function galat(pesan) {
+      $("hasil").hidden = true;
+      $("galat").textContent = pesan;
+      $("galat").hidden = false;
+    }
+
+    function hitung() {
+      $("galat").hidden = true;
+      const A = parseHimpunan($("a").value);
+      let B = parseHimpunan($("b").value);
+      if (B.length === 0) B = A;
+      const R = parseRelasi($("r").value);
+
+      if (A.length === 0) return galat("Himpunan A tidak boleh kosong.");
+      if (A.length * B.length > 400) return galat("Himpunan terlalu besar (maks. 400 pasangan A × B).");
+      const luar = R.filter(p => !A.includes(p[0]) || !B.includes(p[1]));
+      if (luar.length) return galat("Pasangan di luar A × B: " + luar.map(p => `(${p[0]},${p[1]})`).join(", "));
+
+      tampil(analisis(A, B, R));
+    }
+
+    function isi(a, b, r) {
+      $("a").value = a; $("b").value = b; $("r").value = r;
+      hitung();
+    }
+
+    $("hitung").addEventListener("click", hitung);
+    $("contoh1").addEventListener("click", () =>
+      isi("1, 2, 3, 4", "", "(1,1), (1,2), (1,3), (1,4), (2,2), (2,4), (3,3), (4,4)"));
+    $("contoh2").addEventListener("click", () =>
+      isi("1, 2, 3", "", "(1,1), (2,2), (3,3), (1,2), (2,1)"));
+  </script>
+</body>
+</html>
